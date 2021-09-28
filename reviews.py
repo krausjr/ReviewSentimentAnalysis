@@ -1,32 +1,25 @@
 #this project displays five star google reviews for James Kraus while employed at Scheller's Fitness and Cycling.
 
-# import json
-# from outscraper import ApiClient
+import time
 
-# api_cliet = ApiClient(api_key='')
-# business_with_reviews = api_cliet.google_maps_business_reviews(
-#     'https://www.google.com/maps/place/Schellers+Fitness+%26+Cycling+-+Middletown/@38.2451812,-85.544778,17z/data=!3m1!4b1!4m5!3m4!1s0x88699f4ed08a1b7f:0x5f9c01ca3e993ec8!8m2!3d38.2452996!4d-85.5425872',
-#     limit=1,
-#     language='en'
-# )
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
-# with open('reviews.json', 'w') as file:
-#     json.dump(business_with_reviews, file, indent=4)
+browser = webdriver.Chrome()
 
-from outscraper import ApiClient
+browser.get("https://reviews.listen360.com/scheller-s-fitness-cycling-middletown-louisville")
+time.sleep(1)
 
-api_client = ApiClient(api_key='Z29vZ2xlLW9hdXRoMnwxMDY1MTkyNjg3MzQzNTY2MDc2NzV8YjcxOTIzMmFhMw')
+elem = browser.find_element_by_tag_name("body")
 
-# Get reviews of the specific place by id
-result = api_client.google_maps_reviews('https://www.google.com/maps/place/Schellers+Fitness+%26+Cycling+-+Middletown/@38.2451812,-85.544778,17z/data=!3m1!4b1!4m5!3m4!1s0x88699f4ed08a1b7f:0x5f9c01ca3e993ec8!8m2!3d38.2452996!4d-85.5425872', reviewsLimit=1, language='en')
-print(result)
+no_of_pagedowns = 20
 
-# Get reviews for places found by search query
-# result = api_client.google_maps_reviews('Memphis Seoul brooklyn usa', reviewsLimit=20, limit=500, language='en')
+while no_of_pagedowns:
+    elem.send_keys(Keys.PAGE_DOWN)
+    time.sleep(0.2)
+    no_of_pagedowns-=1
 
-# Get only new reviews during last 24 hours
-# from datetime import datetime, timedelta
-# yesterday_timestamp = int((datetime.now() - timedelta(1)).timestamp())
+post_elems = browser.find_elements_by_class_name("listen360-feedback-summary-span")
 
-# result = api_client.google_maps_reviews(
-#     'ChIJrc9T9fpYwokRdvjYRHT8nI4', sort='newest', cutoff=yesterday_timestamp, reviewsLimit=100, language='en')
+for post in post_elems:
+    print(post.text)
