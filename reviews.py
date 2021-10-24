@@ -1,4 +1,4 @@
-# This module displays customer reviews for James Kraus while employed at Scheller's Fitness and Cycling.
+# This module displays customer reviews for James Kraus while employed at Scheller's Fitness and Cycling
 # and performs sentiment analysis on the reviews.
 
 # pip install boto3
@@ -31,7 +31,7 @@ time.sleep(1)
 element = browser.find_element_by_tag_name("body")
 
 # Scroll down on page to load older reviews on the infinite feed.
-no_of_pagedowns = 1
+no_of_pagedowns = 10
 
 while no_of_pagedowns:
     element.send_keys(Keys.PAGE_DOWN)
@@ -39,16 +39,17 @@ while no_of_pagedowns:
     no_of_pagedowns-=1
 
 # Locate reviews that contain the name "James", save as string in json, print review text
+reviews=[]
 review_elements = browser.find_elements_by_xpath("//*[contains(text(), 'James')]")
 for review in review_elements:
     json_string = json.dumps(review.text)
-    print(json_string)
+    reviews.append(json_string)
 
-# Sentiment analysis of review text
+# Sentiment analysis of review text    
 comprehend = boto3.client(service_name='comprehend', region_name='us-east-2')
 
 print('Calling DetectSentiment')
-print(json.dumps(comprehend.detect_sentiment(Text=json_string, LanguageCode='en'), sort_keys=True, indent=4))
+print(json.dumps(comprehend.batch_detect_sentiment(TextList=reviews, LanguageCode='en'), sort_keys=True, indent=4))
 print('End of DetectSentiment\n')
 
 browser.quit()
