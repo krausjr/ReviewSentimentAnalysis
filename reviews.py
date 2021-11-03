@@ -48,9 +48,9 @@ print(*reviews, sep='\n')
 # Sentiment analysis of each review.
 # Insert AWS API keys accordingly.
 client = boto3.client(
-    's3',
-    aws_access_key_id='ACCESS_KEY',
-    aws_secret_access_key='SECRET_ACCESS_KEY'
+    'comprehend',
+    aws_access_key_id='AKIAZAH4H76S7BMXWZVA',
+    aws_secret_access_key='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'
 )
 
 comprehend = boto3.client(service_name='comprehend', region_name='us-east-2')
