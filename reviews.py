@@ -29,7 +29,8 @@ element = browser.find_element_by_tag_name("body")
 
 # Scroll down on page to load older reviews on the infinite feed. 
 # Note: increase no_of_pagedowns to load more reviews
-no_of_pagedowns = 20
+
+no_of_pagedowns = float(input("Input number between 1-100. Higher numbers load more reviews.\n"))
 
 while no_of_pagedowns:
     element.send_keys(Keys.PAGE_DOWN)
@@ -47,13 +48,15 @@ print(*reviews, sep='\n')
 
 # Sentiment analysis of each review.
 # Insert AWS API keys accordingly.
-client = boto3.client(
-    'comprehend',
-    aws_access_key_id='AKIAZAH4H76S7BMXWZVA',
-    aws_secret_access_key='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'
-)
 
-comprehend = boto3.client(service_name='comprehend', region_name='us-east-2')
+access_key = input("INPUT ACCESS KEY\n")
+secret_access_key= input("INPUT SECRET ACCESS KEY\n")
+
+comprehend = boto3.client(
+    'comprehend', 'us-east-2',
+    aws_access_key_id = access_key,
+    aws_secret_access_key = secret_access_key
+)
 
 print('Calling DetectSentiment')
 print(json.dumps(comprehend.batch_detect_sentiment(TextList=reviews, LanguageCode='en'), sort_keys=True, indent=4))
