@@ -9,6 +9,7 @@
 import time
 import boto3
 import json
+import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
@@ -29,37 +30,47 @@ element = browser.find_element_by_tag_name("body")
 
 # Scroll down on page to load older reviews on the infinite feed. 
 # Note: increase no_of_pagedowns to load more reviews
+def load_reviews():
+    no_of_pagedowns = float(input("Input number between 1-100. Higher numbers load more reviews.\n"))
 
-no_of_pagedowns = float(input("Input number between 1-100. Higher numbers load more reviews.\n"))
-
-while no_of_pagedowns:
-    element.send_keys(Keys.PAGE_DOWN)
-    time.sleep(0.05)
-    no_of_pagedowns-=1
+    while no_of_pagedowns:
+        element.send_keys(Keys.PAGE_DOWN)
+        time.sleep(0.05)
+        no_of_pagedowns-=1
 
 # Locate reviews that contain the name "James", save as string in json, 
 # append json strings to list, print list of reviews.
+def find_reviews():
+    review_elements = browser.find_elements_by_xpath("//*[contains(text(), 'James')]")
+    for review in review_elements:
+        json_string = json.dumps(review.text)
+        reviews.append(json_string)
+    # print(*reviews, sep='\n')
+
 reviews=[]
-review_elements = browser.find_elements_by_xpath("//*[contains(text(), 'James')]")
-for review in review_elements:
-    json_string = json.dumps(review.text)
-    reviews.append(json_string)
-print(*reviews, sep='\n')
 
 # Sentiment analysis of each review.
 # Insert AWS API keys accordingly.
+def detect_sentiment():
+    # access_key = input("INPUT ACCESS KEY\n")
+    # secret_access_key= input("INPUT SECRET ACCESS KEY\n")
 
-access_key = input("INPUT ACCESS KEY\n")
-secret_access_key= input("INPUT SECRET ACCESS KEY\n")
+    comprehend = boto3.client(
+        'comprehend', 'us-east-2',
+        aws_access_key_id = '', #access_key
+        aws_secret_access_key = '' #secret_access_key
+    )
+    
+    review_analysis = json.dumps(comprehend.batch_detect_sentiment(TextList=reviews, LanguageCode='en'), sort_keys=True, indent=4)
+    df = pd.json_normalize(review_analysis, record_path=['ResultList'])
+    print(df)
+    
 
-comprehend = boto3.client(
-    'comprehend', 'us-east-2',
-    aws_access_key_id = access_key,
-    aws_secret_access_key = secret_access_key
-)
+def main():
+    load_reviews()
+    find_reviews()
+    detect_sentiment()
 
-print('Calling DetectSentiment')
-print(json.dumps(comprehend.batch_detect_sentiment(TextList=reviews, LanguageCode='en'), sort_keys=True, indent=4))
-print('End of DetectSentiment\n')
+main()
 
 browser.quit()
