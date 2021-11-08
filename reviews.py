@@ -31,7 +31,8 @@ element = browser.find_element_by_tag_name("body")
 # Scroll down on page to load older reviews on the infinite feed. 
 # Note: increase no_of_pagedowns to load more reviews
 def load_reviews():
-    no_of_pagedowns = float(input("Input number between 1-100. Higher numbers load more reviews.\n"))
+    # no_of_pagedowns = float(input("Input number between 1-100. Higher numbers load more reviews.\n"))
+    no_of_pagedowns = 10
 
     while no_of_pagedowns:
         element.send_keys(Keys.PAGE_DOWN)
@@ -60,10 +61,19 @@ def detect_sentiment():
         aws_access_key_id = '', #access_key
         aws_secret_access_key = '' #secret_access_key
     )
+
+    with open('review_analysis.json', 'w', encoding='utf-8') as f:
+        json.dump(comprehend.batch_detect_sentiment(TextList=reviews, LanguageCode='en'), f, ensure_ascii=False, indent=4)
     
-    review_analysis = json.dumps(comprehend.batch_detect_sentiment(TextList=reviews, LanguageCode='en'), sort_keys=True, indent=4)
-    df = pd.json_normalize(review_analysis, record_path=['ResultList'])
+    with open('review_analysis.json', 'r') as f:
+        review_analysis = json.loads(f.read())
+
+    df = pd.json_normalize(review_analysis, record_path=['ResultList'], meta=['Negative', 'Positive'], errors='ignore')
     print(df)
+
+    # review_analysis = json.loads(comprehend.batch_detect_sentiment(TextList=reviews, LanguageCode='en'), sort_keys=True, indent=4)
+    # df = pd.json_normalize(review_analysis, record_path=['ResultList'], meta=['Negative', 'Positive'])
+    # print(df)
     
 
 def main():
