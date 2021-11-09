@@ -1,10 +1,6 @@
 # This module displays customer reviews for James Kraus while employed at Scheller's Fitness and Cycling
 # and performs sentiment analysis on the reviews.
 
-# Install boto3 for sentiment analysis -- pip install boto3
-# Install selenium for webscraping -- pip install selenium
-# Install chromedriver in system PATH for automated browser control: https://chromedriver.chromium.org/downloads
-
 # Import required packages
 import time
 import boto3
@@ -28,19 +24,17 @@ time.sleep(1)
 
 element = browser.find_element_by_tag_name("body")
 
-# Scroll down on page to load older reviews on the infinite feed. 
-# Note: increase no_of_pagedowns to load more reviews
+# Scroll down on page to load older reviews on the infinite feed.
 def load_reviews():
-    no_of_pagedowns = float(input("Input number between 1-100. Higher numbers load more reviews.\n"))
-    # no_of_pagedowns = 
+    no_of_pagedowns = float(input("Type an integer between 1-200. Higher numbers load more reviews.\n")) 
 
     while no_of_pagedowns:
         element.send_keys(Keys.PAGE_DOWN)
-        time.sleep(0.05)
+        time.sleep(0.2)
         no_of_pagedowns-=1
 
 # Locate reviews that contain the name "James", save as string in json, 
-# append json strings to list, print list of reviews.
+# append json strings to list, and create review dataframe.
 def find_reviews():
     review_elements = browser.find_elements_by_xpath("//*[contains(text(), 'James')]")
     for review in review_elements:
@@ -51,8 +45,7 @@ def find_reviews():
 reviews=[]
 reviews_df= pd.DataFrame(columns=['review_text'])
 
-# Sentiment analysis of each review.
-# Insert AWS API keys accordingly.
+# Sentiment analysis of each review. Merge dataframes for review text and sentiment analysis.
 def detect_sentiment():
     access_key = input("INPUT ACCESS KEY\n")
     secret_access_key= input("INPUT SECRET ACCESS KEY\n")
@@ -70,7 +63,7 @@ def detect_sentiment():
     frames = [df1, reviews_df]
     final_df = pd.concat(frames, axis=1)
     
-    print(final_df)
+    pd.DataFrame.to_excel(final_df, excel_writer='reviews.xlsx')
 
 def main():
     load_reviews()
