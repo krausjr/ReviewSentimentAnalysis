@@ -4,10 +4,19 @@ This application displays customer reviews for James Kraus while employed at Sch
 and performs sentiment analysis on the reviews.
 
 The required installs are as follows:
-Install boto3 for sentiment analysis. 
+Install boto3 for sentiment analysis.
+
 -- pip install boto3
+
 Install selenium for webscraping.
+
 -- pip install selenium
+
+Install openpyxl to write dataframe to xlsx file
+
+--pip install openpyxl
+
+
 Install Google Chrome web browser.
 
 The URL passed to selenium for web scraping is an infinite feed of customer reviews. Selenium and chromedriver load more reviews in the feed. Chromedriver must be installed at a system rooted path in order to pilot a chrome browser window. 
