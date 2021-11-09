@@ -1,19 +1,23 @@
 # ReviewSentimentAnalysis
 
-This application scrapes customer reviews for James Kraus while employed at Scheller's Fitness and Cycling from listen360, performs sentiment analysis on the reviews, and saves the reviews and analysis to an xlsx file. This application runs entirely from the command prompt/terminal.
+<h2>This application scrapes customer reviews for James Kraus while employed at Scheller's Fitness and Cycling from listen360, performs sentiment analysis on the reviews, and saves the reviews and analysis to an xlsx file. This application runs entirely from the command prompt/terminal.<h2>
 
 __Required installations are as follows:__
 
 Install boto3 for sentiment analysis.
+
 ```pip install boto3```
 
 Install selenium for webscraping.
+
 ```pip install selenium```
 
 Install openpyxl to write dataframe to xlsx file
+
 ```pip install openpyxl```
 
 Make sure you have Google Chrome Web Browser installed. Navigate to the URL and follow the instructions to download Chrome 
+
 ```https://www.google.com/chrome/```
 
 The webpage containing the customer reviews is an infinite feed. Selenium and chromedriver make it possible to load more reviews in the feed by piloting a browser and sending commands to page down. For this to be possible, Chromedriver *must* be installed at a system rooted path.
@@ -34,14 +38,15 @@ On *Windows devices*
 2. unzip chromedriver and install it
 3. drag/drop the chromedriver file into your Windows folder
 
-Once all installtions are complete, open a terminal window and run:
-```python3 reviews.py```
+Once all installations are complete, open a terminal window, cd the ReviewSentimentAnalysis directory, and run:
 
-AWS access keys can be provided. Input the access keys when prompted.
+```python reviews.py```
 
-The final data file will save as "reviews.xslx" into the project folder.
+AWS access keys can be provided upon request. Input AWS access keys when prompted.
 
-Code Louisville project requirements met:
+The final data file will save as "reviews.xslx" into the ReviewSentimentAnalysis folder.
+
+__Code Louisville project requirements met:__
 
 - [x] Implement a “scraper” that can be fed a type of file or URL and pull information off of it.
 - [x] Connect to an external/3rd party API and read data into your app.
