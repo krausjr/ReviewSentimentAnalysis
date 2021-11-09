@@ -1,6 +1,6 @@
 # ReviewSentimentAnalysis
 
-<h2>This application scrapes customer reviews for James Kraus while employed at Scheller's Fitness and Cycling from listen360, performs sentiment analysis on the reviews, and saves the reviews and analysis to an xlsx file. This application runs entirely from the command prompt/terminal.<h2>
+This application scrapes customer reviews for James Kraus while employed at Scheller's Fitness and Cycling from listen360, performs sentiment analysis on the reviews, and saves the reviews and analysis to an xlsx file. This application runs entirely from the command prompt/terminal.
 
 __Required installations are as follows:__
 
