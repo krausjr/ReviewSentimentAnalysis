@@ -1,4 +1,4 @@
-# PythonProject
+# ReviewSentimentAnalysis
 
 This application displays customer reviews for James Kraus while employed at Scheller's Fitness and Cycling
 and performs sentiment analysis on the reviews.
