@@ -18,12 +18,13 @@ Install openpyxl to write dataframe to xlsx file
 
 Make sure you have Google Chrome Web Browser installed. Navigate to the URL and follow the instructions to download Chrome 
 
-```https://www.google.com/chrome/```
+<link>https://www.google.com/chrome/<link>
 
 The webpage containing the customer reviews is an infinite feed. Selenium and chromedriver make it possible to load more reviews in the feed by piloting a browser and sending commands to page down. For this to be possible, Chromedriver *must* be installed at a system rooted path.
 
 Install chromedriver for automated browser control:
-```https://chromedriver.chromium.org/downloads```
+
+<link>https://chromedriver.chromium.org/downloads<link>
 
 On *macOS devices*
 1. download chromedriver from the URL above
@@ -36,7 +37,7 @@ On *macOS devices*
 On *Windows devices*
 1. download the chromedriver from the URL above
 2. unzip chromedriver and install it
-3. drag/drop the chromedriver file into your Windows folder
+3. drag/drop the chromedriver file into your "C:\Windows" folder
 
 Once all installations are complete, open a terminal window, cd the ReviewSentimentAnalysis directory, and run:
 
