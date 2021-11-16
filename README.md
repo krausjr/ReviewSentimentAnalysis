@@ -12,6 +12,10 @@ Install selenium for webscraping.
 
 ```pip install selenium```
 
+Install pandas for storing information in data frames
+
+```pip install pandas```
+
 Install openpyxl to write dataframe to xlsx file
 
 ```pip install openpyxl```
@@ -52,7 +56,5 @@ __Code Louisville project requirements met:__
 - [x] Implement a “scraper” that can be fed a type of file or URL and pull information off of it.
 - [x] Connect to an external/3rd party API and read data into your app.
 - [x] Analyze text and display information about it.
-- [x] Create and call at least 3 functions or methods, at least one of which must return a value that is used somewhere else in your code.
 - [x] Create a dictionary or list, populate it with several values, retrieve at least one value, and use it in your program.
 - [x] Use pandas, matplotlib, and/or numpy to perform a data analysis project. Ingest 2 or more pieces of data, analyze that data in some manner, and display a new result to a graph, chart, or other display.
-- [x] Visualize data in a graph, chart, or other visual representation of data.
